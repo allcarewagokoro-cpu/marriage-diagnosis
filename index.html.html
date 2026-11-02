@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3分でできる♪無料婚活診断</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Zen Maru Gothic & Noto Sans JP) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            pink: '#F9A8D4',
+                            rose: '#F43F5E',
+                            deepRose: '#E11D48',
+                            gold: '#D97706',
+                            cream: '#FFFBEB',
+                            softBg: '#FFF5F5',
+                            cardBg: '#FFFFFF',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                        rounded: ['"Zen Maru Gothic"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #FFF0F3 0%, #FFFBEB 50%, #FFE4E6 100%);
+            min-height: 100vh;
+        }
+        .font-rounded {
+            font-family: 'Zen Maru Gothic', sans-serif;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(244, 63, 94, 0.15);
+        }
+        .heart-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(4deg); }
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen text-gray-700 antialiased selection:bg-rose-200">
+
+    <!-- Header -->
+    <header class="w-full py-4 px-6 text-center glass-card sticky top-0 z-50 shadow-sm">
+        <div class="max-w-md mx-auto flex items-center justify-between">
+            <span class="text-rose-500 text-lg font-bold font-rounded flex items-center gap-1.5">
+                <i class="fa-solid font-rounded fa-heart text-rose-400"></i> Match Diagnosis
+            </span>
+            <span class="text-xs bg-rose-100 text-rose-600 font-semibold px-2.5 py-1 rounded-full">
+                所要時間：約3分
+            </span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="w-full max-w-md">
+
+            <!-- 1. START CARD -->
+            <div id="start-card" class="glass-card rounded-3xl p-6 sm:p-8 shadow-xl text-center relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-28 h-28 bg-rose-200 rounded-full blur-2xl opacity-50"></div>
+                <div class="absolute -bottom-10 -left-10 w-28 h-28 bg-amber-200 rounded-full blur-2xl opacity-50"></div>
+
+                <div class="relative z-10">
+                    <div class="inline-block p-4 bg-rose-100 rounded-full text-rose-500 mb-4 heart-float">
+                        <i class="fa-solid fa-wand-magic-sparkles text-4xl"></i>
+                    </div>
+                    <span class="block text-xs font-bold text-rose-500 tracking-widest uppercase mb-1">Marriage Style Test</span>
+                    <h1 class="text-2xl sm:text-3xl font-bold font-rounded text-gray-800 leading-snug mb-3">
+                        3分でできる♪<br><span class="text-rose-500 underline decoration-rose-300 decoration-wavy">無料婚活診断</span>
+                    </h1>
+                    <p class="text-sm text-gray-600 mb-6 leading-relaxed">
+                        直感で答える5つの質問で、あなたの「潜在的な恋愛価値観」と「相性の良いパートナーのタイプ」がわかる診断です。
+                    </p>
+
+                    <div class="space-y-2 mb-8 text-left bg-rose-50/70 p-4 rounded-2xl border border-rose-100/80 text-xs text-gray-600">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-check text-rose-500"></i> 登録不要・完全無料
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-check text-rose-500"></i> あなたに合った婚活のアドバイス付き
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-check text-rose-500"></i> 直感で選べる全5問
+                        </div>
+                    </div>
+
+                    <button id="start-btn" class="w-full py-4 px-6 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-bold rounded-2xl shadow-lg shadow-rose-200 transition duration-200 transform active:scale-98 flex items-center justify-center gap-2 text-base">
+                        <span>診断をスタートする</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2. QUESTION CARD -->
+            <div id="quiz-card" class="glass-card rounded-3xl p-6 sm:p-8 shadow-xl hidden animate-fade-in">
+                <!-- Progress Bar -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <span id="question-number" class="text-xs font-bold text-rose-500 tracking-wider">Q.1 / 5</span>
+                        <span id="progress-text" class="text-xs text-gray-400">20%完了</span>
+                    </div>
+                    <div class="w-full bg-rose-100 rounded-full h-2.5 overflow-hidden">
+                        <div id="progress-bar" class="bg-gradient-to-r from-rose-400 to-pink-500 h-2.5 rounded-full transition-all duration-300" style="width: 20%;"></div>
+                    </div>
+                </div>
+
+                <!-- Question Title -->
+                <h2 id="question-text" class="text-lg font-bold font-rounded text-gray-800 mb-6 min-h-[56px] flex items-center">
+                    質問テキストがここに入ります
+                </h2>
+
+                <!-- Options Container -->
+                <div id="options-container" class="space-y-3 mb-4">
+                    <!-- Dynamic option buttons go here -->
+                </div>
+            </div>
+
+            <!-- 3. LOADING CARD -->
+            <div id="loading-card" class="glass-card rounded-3xl p-8 shadow-xl text-center hidden">
+                <div class="py-12">
+                    <div class="inline-block relative w-20 h-20 mb-4">
+                        <div class="absolute inset-0 rounded-full border-4 border-rose-200 border-t-rose-500 animate-spin"></div>
+                        <i class="fa-solid fa-heart absolute inset-0 m-auto text-rose-400 text-2xl animate-pulse"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 font-rounded mb-2">診断中...</h3>
+                    <p class="text-xs text-gray-500">あなたの価値観タイプを分析しています</p>
+                </div>
+            </div>
+
+            <!-- 4. RESULT CARD -->
+            <div id="result-card" class="glass-card rounded-3xl p-6 sm:p-8 shadow-xl hidden animate-fade-in">
+                <div class="text-center mb-6">
+                    <span class="inline-block bg-rose-100 text-rose-600 text-xs font-bold px-3 py-1 rounded-full mb-2">
+                        <i class="fa-solid fa-award mr-1"></i> 診断結果
+                    </span>
+                    <h3 id="result-subtitle" class="text-xs text-gray-500 font-bold uppercase tracking-wider">Your Marriage Style</h3>
+                    <h2 id="result-title" class="text-2xl font-bold font-rounded text-rose-600 mt-1">
+                        タイプタイトル
+                    </h2>
+                </div>
+
+                <!-- Catchphrase / Tagline -->
+                <div class="bg-gradient-to-r from-rose-500 to-pink-500 text-white p-4 rounded-2xl text-center mb-6 shadow-sm">
+                    <p id="result-tagline" class="font-bold font-rounded text-sm sm:text-base">キャッチコピーがはいります</p>
+                </div>
+
+                <!-- Diagnosis Detail Sections -->
+                <div class="space-y-4 mb-6">
+                    <div class="bg-white/80 p-4 rounded-2xl border border-rose-100 shadow-sm">
+                        <h4 class="text-xs font-bold text-rose-500 mb-1 flex items-center gap-1.5">
+                            <i class="fa-solid fa-user"></i> あなたの特徴と価値観
+                        </h4>
+                        <p id="result-desc" class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                            説明文が入ります。
+                        </p>
+                    </div>
+
+                    <div class="bg-white/80 p-4 rounded-2xl border border-amber-100 shadow-sm">
+                        <h4 class="text-xs font-bold text-amber-600 mb-1 flex items-center gap-1.5">
+                            <i class="fa-solid fa-handshake-simple"></i> 相性バッチリのお相手
+                        </h4>
+                        <p id="result-partner" class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                            ベストパートナーの解説が入ります。
+                        </p>
+                    </div>
+
+                    <div class="bg-white/80 p-4 rounded-2xl border border-pink-100 shadow-sm">
+                        <h4 class="text-xs font-bold text-pink-600 mb-1 flex items-center gap-1.5">
+                            <i class="fa-solid fa-lightbulb"></i> 成婚へのアドバイス
+                        </h4>
+                        <p id="result-advice" class="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                            アドバイスが入ります。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Call To Action (CTA) Section -->
+                <div class="border-t border-rose-100 pt-6 mt-6 text-center">
+                    <p class="text-xs font-bold text-gray-600 mb-2">
+                        ＼ あなたに合ったお相手探しをサポート ／
+                    </p>
+                    <h3 class="text-base font-bold font-rounded text-gray-800 mb-4">
+                        プロのアドバイザーに無料で相談してみませんか？
+                    </h3>
+                    
+                    <a href="javascript:void(0)" onclick="handleCtaClick()" class="w-full py-4 px-6 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold rounded-2xl shadow-lg shadow-teal-100 transition duration-200 transform active:scale-98 flex items-center justify-center gap-2 text-base mb-3">
+                        <i class="fa-brands fa-line text-xl"></i>
+                        <span>LINEで無料個別相談を予約する</span>
+                    </a>
+
+                    <p class="text-[10px] text-gray-400 mb-4">
+                        ※強引な勧誘は一切ございません。お気軽にご利用ください。
+                    </p>
+
+                    <!-- Secondary Action: Restart & Share -->
+                    <div class="flex gap-2">
+                        <button id="retry-btn" class="flex-1 py-2.5 px-3 bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-semibold rounded-xl transition flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-rotate-right"></i> もう一度診断する
+                        </button>
+                        <button id="share-btn" class="flex-1 py-2.5 px-3 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-semibold rounded-xl transition flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-share-nodes"></i> 結果をシェアする
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toast Notification -->
+            <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-4 py-2.5 rounded-full shadow-lg opacity-0 transition-opacity duration-300 pointer-events-none z-50">
+                メッセージ
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-6 text-center text-xs text-gray-400">
+        <p>&copy; 3分でできる♪無料婚活診断 All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Quiz Data Definition
+        const quizData = [
+            {
+                question: "Q1. 理想の休日デートの過ごし方は？",
+                options: [
+                    { text: "おしゃれなカフェや話題のスポットへ出かけたい", type: "A" },
+                    { text: "おうちで映画を見たり、まったり過ごしたい", type: "B" },
+                    { text: "温泉旅行や自然豊かな場所でリフレッシュしたい", type: "C" },
+                    { text: "ドライブやアクティビティをアクティブに楽しみたい", type: "D" }
+                ]
+            },
+            {
+                question: "Q2. パートナーに最も求める要素は？",
+                options: [
+                    { text: "トキメキやロマンチックな雰囲気", type: "A" },
+                    { text: "経済力や生活観・価値観の安定", type: "B" },
+                    { text: "包容力と穏やかさ・優しさ", type: "C" },
+                    { text: "お互いの自立と尊敬し合える関係", type: "D" }
+                ]
+            },
+            {
+                question: "Q3. 意見が食い違った時のあなたの行動は？",
+                options: [
+                    { text: "相手の気持ちによりそいながら、じっくり話し合う", type: "C" },
+                    { text: "感情的にならず、現実的な解決策を冷静に考える", type: "B" },
+                    { text: "少し時間を置いてから、自分の素直な思いを伝える", type: "A" },
+                    { text: "自分の意見も伝えつつ、相手の提案も柔軟に受け入れる", type: "D" }
+                ]
+            },
+            {
+                question: "Q4. 結婚生活において一番大切にしたいことは？",
+                options: [
+                    { text: "いつまでも恋人のような新鮮さとスキンシップ", type: "A" },
+                    { text: "将来に向けた計画性と安心できる基盤づくり", type: "B" },
+                    { text: "笑い声が絶えない温かい家庭雰囲気", type: "C" },
+                    { text: "自分の時間や仕事・趣味もお互い尊重すること", type: "D" }
+                ]
+            },
+            {
+                question: "Q5. 直感で魅力を感じる人の第一印象は？",
+                options: [
+                    { text: "センスが良く、言葉遣いや身だしなみがスマートな人", type: "A" },
+                    { text: "誠実で落ち着きがあり、約束をしっかり守る人", type: "B" },
+                    { text: "笑顔が多く、聞き上手で一緒にいて落ち着く人", type: "C" },
+                    { text: "自分の目標を持って生き生きと行動している人", type: "D" }
+                ]
+            }
+        ];
+
+        // Diagnosis Results Data
+        const resultTypes = {
+            A: {
+                title: "ロマンチック理想派タイプ",
+                tagline: "「心ときめく素敵な出会いと感動を大切にする情熱家」",
+                desc: "恋愛感情やフィーリングをとても大切にするタイプです。お相手の魅力を引き出すのが上手で、記念日やイベントを一緒に楽しめる華やかな関係を好みます。",
+                partner: "あなたの感性を理解し、さりげない優しさや気配りができる洗練されたお相手。",
+                advice: "理想が高くなりすぎないよう「一緒に育てていく関係」を意識すると、運命のお相手が見つかりやすくなります。"
+            },
+            B: {
+                title: "堅実リアリストタイプ",
+                tagline: "「安心感と将来の計画性を重視するしっかり者」",
+                desc: "結婚をライフプランの一環として冷静に捉えられるタイプです。金銭感覚や暮らしの価値観の一致を大切にし、信頼関係をコツコツ築くことができます。",
+                partner: "誠実で落ち着きがあり、家庭や仕事に対する責任感の強いお相手。",
+                advice: "条件面だけでなく、ふとした時の「居心地の良さ」や「楽しさ」にも目を向けると素敵なご縁が広がります。"
+            },
+            C: {
+                title: "調和・癒やし重視派タイプ",
+                tagline: "「お互いを思いやり温かい家庭を築く平和主義者」",
+                desc: "共感力が高く、相手の気持ちに寄り添える優しいタイプです。無理のない自分らしさでいられる、居心地の良い平和な生活を理想としています。",
+                partner: "包容力があり、感謝の言葉を素直に伝え合える穏やかなお相手。",
+                advice: "相手に合わせすぎて疲れちゃうことも。自分の希望や本音も少しずつ伝える練習をしてみましょう。"
+            },
+            D: {
+                title: "アクティブ自立派タイプ",
+                tagline: "「お互いに高め合い人生を豊かに楽しむチャレンジャー」",
+                desc: "自分の世界を持ちつつ、パートナーとも対等な関係を築きたいタイプです。共通の趣味や新しい体験を一緒に楽しむアクティブな婚活に向いています。",
+                partner: "自立していて、お互いの自由や意思を尊重できる柔軟なお相手。",
+                advice: "お互いの忙しさを尊重しつつ、定期的なコミュニケーションの時間を意図的に作ることで絆が深まります。"
+            }
+        };
+
+        // State variables
+        let currentQuestion = 0;
+        let scores = { A: 0, B: 0, C: 0, D: 0 };
+
+        // DOM Elements
+        const startCard = document.getElementById('start-card');
+        const quizCard = document.getElementById('quiz-card');
+        const loadingCard = document.getElementById('loading-card');
+        const resultCard = document.getElementById('result-card');
+        
+        const startBtn = document.getElementById('start-btn');
+        const retryBtn = document.getElementById('retry-btn');
+        const shareBtn = document.getElementById('share-btn');
+        const questionNumber = document.getElementById('question-number');
+        const progressText = document.getElementById('progress-text');
+        const progressBar = document.getElementById('progress-bar');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+
+        // Start Quiz Event
+        startBtn.addEventListener('click', () => {
+            startCard.classList.add('hidden');
+            quizCard.classList.remove('hidden');
+            currentQuestion = 0;
+            scores = { A: 0, B: 0, C: 0, D: 0 };
+            renderQuestion();
+        });
+
+        // Render Current Question
+        function renderQuestion() {
+            const q = quizData[currentQuestion];
+            const total = quizData.length;
+            const progressPercent = Math.round(((currentQuestion + 1) / total) * 100);
+
+            questionNumber.textContent = `Q.${currentQuestion + 1} / ${total}`;
+            progressText.textContent = `${progressPercent}%完了`;
+            progressBar.style.width = `${progressPercent}%`;
+            questionText.textContent = q.question;
+
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `w-full p-4 rounded-2xl border-2 border-rose-100 bg-white/90 hover:border-rose-300 hover:bg-rose-50/50 text-left transition duration-200 text-xs sm:text-sm text-gray-700 font-medium flex items-center justify-between group`;
+                btn.innerHTML = `
+                    <span>${opt.text}</span>
+                    <i class="fa-solid fa-chevron-right text-rose-300 group-hover:text-rose-500 group-hover:translate-x-1 transition-transform duration-200"></i>
+                `;
+                btn.addEventListener('click', () => selectOption(opt.type));
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        // Handle Option Selection
+        function selectOption(type) {
+            scores[type]++;
+            currentQuestion++;
+
+            if (currentQuestion < quizData.length) {
+                renderQuestion();
+            } else {
+                showLoading();
+            }
+        }
+
+        // Show Loading Screen before Result
+        function showLoading() {
+            quizCard.classList.add('hidden');
+            loadingCard.classList.remove('hidden');
+
+            setTimeout(() => {
+                loadingCard.classList.add('hidden');
+                showResult();
+            }, 1200);
+        }
+
+        // Calculate and Show Result Card
+        function showResult() {
+            // Determine dominant type
+            let maxType = 'A';
+            let maxScore = -1;
+            
+            for (const type in scores) {
+                if (scores[type] > maxScore) {
+                    maxScore = scores[type];
+                    maxType = type;
+                }
+            }
+
+            const result = resultTypes[maxType];
+
+            document.getElementById('result-title').textContent = result.title;
+            document.getElementById('result-tagline').textContent = result.tagline;
+            document.getElementById('result-desc').textContent = result.desc;
+            document.getElementById('result-partner').textContent = result.partner;
+            document.getElementById('result-advice').textContent = result.advice;
+
+            resultCard.classList.remove('hidden');
+        }
+
+        // Restart Quiz
+        retryBtn.addEventListener('click', () => {
+            resultCard.classList.add('hidden');
+            startCard.classList.remove('hidden');
+        });
+
+        // Share Quiz Result
+        shareBtn.addEventListener('click', () => {
+            const title = document.getElementById('result-title').textContent;
+            const shareText = `【3分でできる♪無料婚活診断】私の婚活タイプは「${title}」でした！みんなも診断してみてね✨`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: '3分でできる♪無料婚活診断',
+                    text: shareText,
+                    url: window.location.href,
+                }).catch(() => {});
+            } else {
+                // Clipboard Fallback
+                const tempInput = document.createElement('textarea');
+                tempInput.value = `${shareText} ${window.location.href}`;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                showToast('結果テキストをコピーしました！');
+            }
+        });
+
+        // CTA Click Handler
+        function handleCtaClick() {
+            showToast('LINE相談画面へ移動します（デモ動作）');
+        }
+
+        // Show Toast Utility
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
